@@ -1,0 +1,89 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Topaz
+providerId: topaz
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Access Control
+- Authorization
+- Fine-Grained Authorization
+- Open Source
+- Plans
+description: >-
+  Topaz itself is free and open source under Apache-2.0
+  (github.com/aserto-dev/topaz). You self-host the authorizer (Docker or
+  binary); there is no license fee and no per-decision charge from the project -
+  your only cost is the infrastructure you run it on. There is no paid Topaz
+  tier. The commercial offering is Aserto, a hosted control plane built on Topaz
+  that centrally manages policies, directory data, and decision logs across many
+  deployed authorizers; Aserto is a separate product with its own tiers
+  (typically a free developer tier plus usage/seat-based paid and enterprise
+  plans - contact Aserto for current rates). Exact Aserto rates are not
+  reconciled here.
+notes: >-
+  The Topaz Authorizer and Directory APIs have no separate fee - they are served
+  by the authorizer you run yourself. Verify current Aserto control-plane tiers
+  and rates on the Aserto pricing page during reconciliation.
+sources:
+- https://www.topaz.sh/
+- https://github.com/aserto-dev/topaz
+- https://www.aserto.com/pricing
+plans:
+- id: topaz-open-source
+  name: Topaz Open Source (Self-Hosted)
+  type: free
+  description: >-
+    The full Topaz authorizer, Apache-2.0 licensed and self-hostable via Docker
+    (ghcr.io/aserto-dev/topaz) or binary. Includes the OPA-based decision engine,
+    the Authorizer API (is / decisiontree / query), the embedded Zanzibar-style
+    Directory v3 API (objects, relations, checks), and the local web Console.
+    No license fee and no per-decision charge; cost is your own infrastructure.
+  entries:
+  - label: Self-Hosted Decisions
+    name: self_hosted_decisions
+    type: usage
+    metric: decisions
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (self-hosted; you provide infrastructure)
+    userMultiplied: false
+  elements:
+  - name: Authorizer API
+  - name: Directory v3 API
+  - name: OPA Decision Engine
+  - name: Local Web Console
+  - name: gRPC and REST Interfaces
+- id: aserto-hosted
+  name: Aserto Hosted Control Plane
+  type: subscription
+  description: >-
+    Aserto is the commercial hosted control plane built on Topaz. It centrally
+    manages policies, users, groups, objects, relations, and decision logs and
+    syncs them to locally-deployed Topaz authorizers. Typically offered with a
+    free developer tier plus usage/seat-based paid and enterprise tiers. Rates
+    are set by Aserto and not reconciled here.
+  entries:
+  - label: Control Plane Subscription
+    name: aserto_subscription
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: see aserto.com/pricing (free developer tier plus paid tiers)
+    userMultiplied: false
+  elements:
+  - name: Central Policy Management
+  - name: Central Directory Management
+  - name: Decision Logs
+  - name: Real-Time Data Fabric Sync
+  - name: Support and SLAs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

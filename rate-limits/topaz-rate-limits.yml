@@ -1,0 +1,58 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Topaz
+providerId: topaz
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Access Control
+- Authorization
+- Fine-Grained Authorization
+- Rate Limiting
+- Quotas
+description: >-
+  Topaz does not publish fixed numeric rate limits. Because Topaz is self-hosted
+  (you run the authorizer yourself, typically as a local sidecar or nearby
+  service), authorization throughput is bounded by your own hardware and
+  configuration rather than by a vendor quota. The authorizer is designed for
+  low-latency, high-volume in-process/near-process decisions; the embedded
+  directory and OPA engine evaluate against local data. Any per-tenant quotas or
+  request caps would come from the Aserto hosted control plane, not from the
+  open-source Topaz authorizer.
+notes: >-
+  No numeric per-instance limits are documented for the Topaz Authorizer or
+  Directory APIs as of the review date - scale is a function of your deployment
+  (CPU/memory, replicas, directory size). If you use the Aserto hosted control
+  plane, verify any plan-based limits on the Aserto pricing/docs pages.
+sources:
+- https://www.topaz.sh/docs/authorizer-guide/overview
+- https://github.com/aserto-dev/topaz
+- https://www.aserto.com/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Authorizer Decisions
+  scope: deployment
+  metric: decisions
+  limit: hardware-bound
+  notes: Bounded by your own CPU/memory and replica count; no vendor-imposed cap on self-hosted Topaz.
+- name: Directory Reads/Writes
+  scope: deployment
+  metric: requests
+  limit: hardware-bound
+  notes: Directory object/relation/check throughput is a function of the embedded store and your infrastructure.
+- name: Aserto Control Plane
+  scope: tenant
+  metric: requests
+  limit: per plan
+  notes: Any request or seat quotas apply to the Aserto hosted control plane, not to the open-source authorizer.
+policies:
+- name: Sidecar/Local Deployment
+  description: Topaz is typically deployed as a sidecar or nearby service so decisions are made with minimal network latency and no external rate limit.
+- name: Backoff Strategy
+  description: Clients calling a shared Topaz instance should implement exponential backoff with jitter and honor Retry-After on any 429 responses returned by an upstream proxy or the Aserto control plane.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

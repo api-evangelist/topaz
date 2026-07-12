@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Topaz Authorizer and Directory API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{apiKey}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authorizer", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Is (authorization decision)", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v2/authz/is",
+            "body": { "type": "json", "data": "{\n  \"identity_context\": { \"identity\": \"euang@acmecorp.com\", \"type\": \"IDENTITY_TYPE_SUB\" },\n  \"policy_context\": { \"path\": \"rebac.check\", \"decisions\": [\"allowed\"] },\n  \"resource_context\": {}\n}" }
+          },
+          "docs": "Returns whether the identity is allowed the named decision(s) on the resource."
+        },
+        {
+          "info": { "name": "Decision tree", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v2/authz/decisiontree",
+            "body": { "type": "json", "data": "{\n  \"identity_context\": { \"identity\": \"euang@acmecorp.com\", \"type\": \"IDENTITY_TYPE_SUB\" },\n  \"policy_context\": { \"path\": \"rebac\", \"decisions\": [\"allowed\"] },\n  \"resource_context\": {}\n}" }
+          },
+          "docs": "Evaluates every decision at or below a policy path in a single call."
+        },
+        {
+          "info": { "name": "Query (arbitrary Rego)", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v2/authz/query",
+            "body": { "type": "json", "data": "{\n  \"query\": \"x = data\",\n  \"identity_context\": { \"identity\": \"euang@acmecorp.com\", \"type\": \"IDENTITY_TYPE_SUB\" }\n}" }
+          },
+          "docs": "Runs an arbitrary Rego query against loaded policy and directory data."
+        },
+        {
+          "info": { "name": "List loaded policies", "type": "http" },
+          "http": { "method": "GET", "url": "{{baseUrl}}/api/v2/policies" },
+          "docs": "Lists the OPA policy modules loaded into the authorizer."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Directory Objects", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get object", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v3/directory/object/:object_type/:object_id",
+            "params": [
+              { "name": "object_type", "value": "user", "type": "path", "description": "The object type." },
+              { "name": "object_id", "value": "euang@acmecorp.com", "type": "path", "description": "The object id." }
+            ]
+          },
+          "docs": "Retrieves a single directory object by type and id."
+        },
+        {
+          "info": { "name": "List objects of a type", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v3/directory/objects/:object_type",
+            "params": [
+              { "name": "object_type", "value": "user", "type": "path", "description": "The object type." }
+            ]
+          },
+          "docs": "Lists directory objects of a given type."
+        },
+        {
+          "info": { "name": "Set object", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v3/directory/object",
+            "body": { "type": "json", "data": "{\n  \"object\": { \"type\": \"user\", \"id\": \"euang@acmecorp.com\", \"display_name\": \"Euan Garden\" }\n}" }
+          },
+          "docs": "Creates or updates a directory object."
+        },
+        {
+          "info": { "name": "Delete object", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v3/directory/object/:object_type/:object_id",
+            "params": [
+              { "name": "object_type", "value": "user", "type": "path", "description": "The object type." },
+              { "name": "object_id", "value": "euang@acmecorp.com", "type": "path", "description": "The object id." }
+            ]
+          },
+          "docs": "Deletes a directory object by type and id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Directory Relations", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get relation", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v3/directory/relation?object_type=group&object_id=admin&relation=member&subject_type=user&subject_id=euang@acmecorp.com",
+            "params": [
+              { "name": "object_type", "value": "group", "type": "query" },
+              { "name": "object_id", "value": "admin", "type": "query" },
+              { "name": "relation", "value": "member", "type": "query" },
+              { "name": "subject_type", "value": "user", "type": "query" },
+              { "name": "subject_id", "value": "euang@acmecorp.com", "type": "query" }
+            ]
+          },
+          "docs": "Retrieves a single relation by object, relation, and subject."
+        },
+        {
+          "info": { "name": "List relations", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v3/directory/relations?object_type=group&object_id=admin",
+            "params": [
+              { "name": "object_type", "value": "group", "type": "query" },
+              { "name": "object_id", "value": "admin", "type": "query" }
+            ]
+          },
+          "docs": "Lists relations matching an object and/or subject filter."
+        },
+        {
+          "info": { "name": "Set relation", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v3/directory/relation",
+            "body": { "type": "json", "data": "{\n  \"relation\": { \"object_type\": \"group\", \"object_id\": \"admin\", \"relation\": \"member\", \"subject_type\": \"user\", \"subject_id\": \"euang@acmecorp.com\" }\n}" }
+          },
+          "docs": "Creates or updates a relation between a subject and an object."
+        },
+        {
+          "info": { "name": "Delete relation", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v3/directory/relation?object_type=group&object_id=admin&relation=member&subject_type=user&subject_id=euang@acmecorp.com",
+            "params": [
+              { "name": "object_type", "value": "group", "type": "query" },
+              { "name": "object_id", "value": "admin", "type": "query" },
+              { "name": "relation", "value": "member", "type": "query" },
+              { "name": "subject_type", "value": "user", "type": "query" },
+              { "name": "subject_id", "value": "euang@acmecorp.com", "type": "query" }
+            ]
+          },
+          "docs": "Deletes a relation by object, relation, and subject."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Directory Checks", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Check", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v3/directory/check",
+            "body": { "type": "json", "data": "{\n  \"object_type\": \"resource\",\n  \"object_id\": \"report-1\",\n  \"relation\": \"can_read\",\n  \"subject_type\": \"user\",\n  \"subject_id\": \"euang@acmecorp.com\"\n}" }
+          },
+          "docs": "Returns whether a subject has a relation or permission on an object via the graph."
+        },
+        {
+          "info": { "name": "Get graph", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v3/directory/graph?object_type=group&object_id=admin&relation=member&subject_type=user",
+            "params": [
+              { "name": "object_type", "value": "group", "type": "query" },
+              { "name": "object_id", "value": "admin", "type": "query" },
+              { "name": "relation", "value": "member", "type": "query" },
+              { "name": "subject_type", "value": "user", "type": "query" }
+            ]
+          },
+          "docs": "Expands the object graph to return reachable subjects or objects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

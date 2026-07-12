@@ -1,0 +1,171 @@
+{
+  "info": {
+    "name": "Topaz Authorizer and Directory API",
+    "description": "Topaz is an open-source (Apache-2.0) authorizer combining OPA with a Zanzibar-style directory, maintained by Aserto (github.com/aserto-dev/topaz). It is SELF-HOSTED: run the authorizer yourself (ghcr.io/aserto-dev/topaz) and call it on your own instance. Default REST gateway base URL: https://localhost:8383 (authorizer gRPC :8282, directory gRPC :9292, Console :8080). The Authorizer API lives under /api/v2 and the Directory v3 API under /api/v3/directory. Set apiKey only if your deployment (or the Aserto hosted service) requires it.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{apiKey}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://localhost:8383", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Authorizer",
+      "item": [
+        {
+          "name": "Is (authorization decision)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"identity_context\": { \"identity\": \"euang@acmecorp.com\", \"type\": \"IDENTITY_TYPE_SUB\" },\n  \"policy_context\": { \"path\": \"rebac.check\", \"decisions\": [\"allowed\"] },\n  \"resource_context\": {}\n}" },
+            "url": { "raw": "{{baseUrl}}/api/v2/authz/is", "host": ["{{baseUrl}}"], "path": ["api", "v2", "authz", "is"] },
+            "description": "Returns whether the identity is allowed the named decision(s) on the resource."
+          }
+        },
+        {
+          "name": "Decision tree",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"identity_context\": { \"identity\": \"euang@acmecorp.com\", \"type\": \"IDENTITY_TYPE_SUB\" },\n  \"policy_context\": { \"path\": \"rebac\", \"decisions\": [\"allowed\"] },\n  \"resource_context\": {}\n}" },
+            "url": { "raw": "{{baseUrl}}/api/v2/authz/decisiontree", "host": ["{{baseUrl}}"], "path": ["api", "v2", "authz", "decisiontree"] },
+            "description": "Evaluates every decision at or below a policy path in a single call."
+          }
+        },
+        {
+          "name": "Query (arbitrary Rego)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"x = data\",\n  \"identity_context\": { \"identity\": \"euang@acmecorp.com\", \"type\": \"IDENTITY_TYPE_SUB\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/v2/authz/query", "host": ["{{baseUrl}}"], "path": ["api", "v2", "authz", "query"] },
+            "description": "Runs an arbitrary Rego query against loaded policy and directory data."
+          }
+        },
+        {
+          "name": "List loaded policies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v2/policies", "host": ["{{baseUrl}}"], "path": ["api", "v2", "policies"] },
+            "description": "Lists the OPA policy modules loaded into the authorizer."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Directory Objects",
+      "item": [
+        {
+          "name": "Get object",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/object/:object_type/:object_id", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "object", ":object_type", ":object_id"], "variable": [{ "key": "object_type", "value": "user" }, { "key": "object_id", "value": "euang@acmecorp.com" }] },
+            "description": "Retrieves a single directory object by type and id."
+          }
+        },
+        {
+          "name": "List objects of a type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/objects/:object_type", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "objects", ":object_type"], "variable": [{ "key": "object_type", "value": "user" }] },
+            "description": "Lists directory objects of a given type."
+          }
+        },
+        {
+          "name": "Set object",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"object\": { \"type\": \"user\", \"id\": \"euang@acmecorp.com\", \"display_name\": \"Euan Garden\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/object", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "object"] },
+            "description": "Creates or updates a directory object."
+          }
+        },
+        {
+          "name": "Delete object",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/object/:object_type/:object_id", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "object", ":object_type", ":object_id"], "variable": [{ "key": "object_type", "value": "user" }, { "key": "object_id", "value": "euang@acmecorp.com" }] },
+            "description": "Deletes a directory object by type and id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Directory Relations",
+      "item": [
+        {
+          "name": "Get relation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/relation?object_type=group&object_id=admin&relation=member&subject_type=user&subject_id=euang@acmecorp.com", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "relation"], "query": [{ "key": "object_type", "value": "group" }, { "key": "object_id", "value": "admin" }, { "key": "relation", "value": "member" }, { "key": "subject_type", "value": "user" }, { "key": "subject_id", "value": "euang@acmecorp.com" }] },
+            "description": "Retrieves a single relation by object, relation, and subject."
+          }
+        },
+        {
+          "name": "List relations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/relations?object_type=group&object_id=admin", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "relations"], "query": [{ "key": "object_type", "value": "group" }, { "key": "object_id", "value": "admin" }] },
+            "description": "Lists relations matching an object and/or subject filter."
+          }
+        },
+        {
+          "name": "Set relation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"relation\": { \"object_type\": \"group\", \"object_id\": \"admin\", \"relation\": \"member\", \"subject_type\": \"user\", \"subject_id\": \"euang@acmecorp.com\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/relation", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "relation"] },
+            "description": "Creates or updates a relation between a subject and an object."
+          }
+        },
+        {
+          "name": "Delete relation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/relation?object_type=group&object_id=admin&relation=member&subject_type=user&subject_id=euang@acmecorp.com", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "relation"], "query": [{ "key": "object_type", "value": "group" }, { "key": "object_id", "value": "admin" }, { "key": "relation", "value": "member" }, { "key": "subject_type", "value": "user" }, { "key": "subject_id", "value": "euang@acmecorp.com" }] },
+            "description": "Deletes a relation by object, relation, and subject."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Directory Checks",
+      "item": [
+        {
+          "name": "Check",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"object_type\": \"resource\",\n  \"object_id\": \"report-1\",\n  \"relation\": \"can_read\",\n  \"subject_type\": \"user\",\n  \"subject_id\": \"euang@acmecorp.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/check", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "check"] },
+            "description": "Returns whether a subject has a relation or permission on an object via the graph."
+          }
+        },
+        {
+          "name": "Get graph",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v3/directory/graph?object_type=group&object_id=admin&relation=member&subject_type=user", "host": ["{{baseUrl}}"], "path": ["api", "v3", "directory", "graph"], "query": [{ "key": "object_type", "value": "group" }, { "key": "object_id", "value": "admin" }, { "key": "relation", "value": "member" }, { "key": "subject_type", "value": "user" }] },
+            "description": "Expands the object graph to return reachable subjects or objects."
+          }
+        }
+      ]
+    }
+  ]
+}

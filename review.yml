@@ -1,0 +1,108 @@
+aid: topaz
+name: Topaz
+review:
+  question: Does Topaz expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Topaz's APIs are gRPC and REST
+    (request/response) - the Authorizer API (is / decisiontree / query) and the
+    Directory v3 API (objects, relations, checks, graph). There is no
+    server-push transport (WebSocket or SSE) on Topaz's own API to model.
+    Topaz is also self-hosted: there is no single canonical public endpoint;
+    each operator runs their own authorizer, so any base URL is per-instance.
+findings:
+  summary: |
+    Topaz does not publish a documented public WebSocket API. Topaz is an
+    open-source (Apache-2.0) authorizer maintained by Aserto
+    (github.com/aserto-dev/topaz) that combines the Open Policy Agent (OPA)
+    decision engine with a built-in Zanzibar-style relationship directory. It
+    is self-hosted - you run the authorizer yourself (Docker image
+    ghcr.io/aserto-dev/topaz or a binary) - so the base URL is your own
+    instance. Topaz exposes gRPC APIs (authorizer on :8282, directory on :9292
+    by default) and a REST surface via the gRPC-gateway (default
+    https://localhost:8383; in some deployments the directory REST gateway is
+    on :9393), plus a local web Console (default :8080). The REST APIs are
+    request/response: the Authorizer API (POST /api/v2/authz/is,
+    /api/v2/authz/decisiontree, /api/v2/authz/query and GET /api/v2/policies)
+    and the Directory v3 API under /api/v3/directory (object, objects,
+    relation, relations, check, graph). No realtime, bidirectional, or
+    streaming WebSocket (ws:// or wss://) endpoint is documented on Topaz's own
+    API as of the review date.
+  openSource: |
+    Topaz is open source under Apache-2.0 (github.com/aserto-dev/topaz) and
+    self-hostable via Docker or a binary. It bundles OPA as the decision engine
+    and an embedded, Zanzibar-inspired directory for the object/relation graph,
+    and ships a local web Console. Aserto (aserto.com) is the commercial hosted
+    control plane built on Topaz, which centrally manages policies, users,
+    groups, objects, relations, and decision logs and syncs them to
+    locally-deployed Topaz authorizers over a real-time data fabric.
+  selfHosted: |
+    Topaz is per-instance self-hosted. There is no single public base URL; the
+    default REST gateway listens on https://localhost:8383 on the operator's own
+    host. Authentication is deployment-dependent: Topaz can run with no auth
+    (default local dev), with a static API key, or behind mTLS. The Aserto
+    hosted service serves the same contracts from tenant-scoped hosts such as
+    https://authorizer.prod.aserto.com and https://directory.prod.aserto.com
+    with an API key plus an Aserto-Tenant-Id header.
+  transports:
+    - protocol: gRPC
+      scheme: grpc
+      baseURL: localhost:8282 (authorizer), localhost:9292 (directory)
+      documented: true
+      note: Primary interface. Authorizer and Directory services are defined as protobuf gRPC services.
+    - protocol: REST
+      scheme: https
+      baseURL: https://localhost:8383
+      documented: true
+      note: gRPC-gateway REST surface for the authorizer (/api/v2) and directory (/api/v3/directory). Directory REST may be on :9393 in split deployments.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Topaz's authorizer or directory reference as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://localhost:8383/api/v2/authz/is
+    - POST   https://localhost:8383/api/v2/authz/decisiontree
+    - POST   https://localhost:8383/api/v2/authz/query
+    - GET    https://localhost:8383/api/v2/policies
+    - GET    https://localhost:8383/api/v2/policies/{id}
+    - GET    https://localhost:8383/api/v3/directory/object/{object_type}/{object_id}
+    - DELETE https://localhost:8383/api/v3/directory/object/{object_type}/{object_id}
+    - GET    https://localhost:8383/api/v3/directory/objects/{object_type}
+    - POST   https://localhost:8383/api/v3/directory/object
+    - GET    https://localhost:8383/api/v3/directory/relation
+    - POST   https://localhost:8383/api/v3/directory/relation
+    - DELETE https://localhost:8383/api/v3/directory/relation
+    - GET    https://localhost:8383/api/v3/directory/relations
+    - POST   https://localhost:8383/api/v3/directory/check
+    - GET    https://localhost:8383/api/v3/directory/graph
+sources:
+  - url: https://github.com/aserto-dev/topaz
+    type: SourceCode
+    note: Open-source (Apache-2.0) authorizer; default ports and self-hosted Docker deployment.
+  - url: https://www.topaz.sh/docs/authorizer-guide/overview
+    type: Documentation
+    note: Authorizer API overview - is, decisiontree, query. All gRPC/REST request-response.
+  - url: https://www.topaz.sh/docs/authorizer-guide/is
+    type: APIReference
+    note: POST /api/v2/authz/is with identityContext, policyContext, resourceContext.
+  - url: https://www.topaz.sh/docs/directory/apis
+    type: Documentation
+    note: Directory v3 reader/writer APIs; REST under /api/v3/directory.
+  - url: https://www.topaz.sh/docs/directory/writer
+    type: APIReference
+    note: Writer service SetObject / DeleteObject / SetRelation / DeleteRelation.
+  - url: https://www.aserto.com/blog/topaz-oss-cloud-native-authorization-combines-opa-zanzibar
+    type: Blog
+    note: Topaz combines OPA and Zanzibar; Aserto is the hosted control plane built on Topaz.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Topaz's own API is request/response
+    over gRPC and REST (gRPC-gateway). No AsyncAPI document was created because
+    there is no server-push transport (WebSocket or SSE) on Topaz's own API to
+    model. The entry is documented as a self-hosted, open-source authorizer with
+    per-instance base URLs.
