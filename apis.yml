@@ -140,6 +140,8 @@ apis:
     set of subjects or objects reachable through a relation. This is the
     data-driven, Zanzibar-style complement to the policy-driven Authorizer is API.
 common:
+- type: AgenticAccess
+  url: agentic-access/topaz-agentic-access.yml
 - type: GitHubOrganization
   url: https://github.com/aserto-dev/topaz
 - type: LinkedIn
