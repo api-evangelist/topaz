@@ -1,0 +1,180 @@
+openapi: 3.0.3
+info:
+  title: Topaz and Directory Authorizer API
+  description: 'Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz). It combines the Open Policy Agent (OPA) decision engine with a built-in Zanzibar-style relationship directory. Topaz is SELF-HOSTED: you run the authorizer yourself (Docker image ghcr.io/aserto-dev/topaz or a binary), and it exposes gRPC plus REST (gRPC-gateway) APIs from your own instance. The base URL is therefore your own deployment - by default the REST gateway listens on https://localhost:8383 (authorizer gRPC on :8282, directory gRPC on :9292, local web Console on :8080). In split deployments the directory REST endpoints may be exposed on :9393. This document models the REST surface: the Authorizer API (is / decisiontree / query and policy listing) under /api/v2, and the Directory v3 API (objects, relations, and checks) under /api/v3/directory. Aserto is the commercial hosted control plane built on Topaz; on Aserto the same contracts are served from tenant-scoped hosts such as https://authorizer.prod.aserto.com and https://directory.prod.aserto.com.'
+  version: '1.0'
+  contact:
+    name: Topaz
+    url: https://www.topaz.sh
+  license:
+    name: Apache-2.0
+    url: https://github.com/aserto-dev/topaz/blob/main/LICENSE
+servers:
+- url: https://localhost:8383
+  description: Self-hosted Topaz REST gateway (default). Replace with your own instance host.
+- url: https://authorizer.prod.aserto.com
+  description: Aserto hosted control plane (Authorizer API), tenant-scoped.
+- url: https://directory.prod.aserto.com
+  description: Aserto hosted control plane (Directory API), tenant-scoped.
+security:
+- apiKey: []
+tags:
+- name: Authorizer
+  description: Policy-driven decisions - is, decisiontree, and query - evaluated by the OPA engine.
+paths:
+  /api/v2/authz/is:
+    post:
+      operationId: is
+      tags:
+      - Authorizer
+      summary: Is (authorization decision)
+      description: Returns whether the identity in identityContext is allowed the decision(s) named in policyContext for the resource in resourceContext. The primary allowed/denied API.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IsRequest'
+      responses:
+        '200':
+          description: The evaluated decisions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v2/authz/decisiontree:
+    post:
+      operationId: decisionTree
+      tags:
+      - Authorizer
+      summary: Decision tree
+      description: Evaluates every decision at (or below) a policy path in a single call and returns the tree of results, so a client can render, for example, a UI's enabled/disabled state in one round trip.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionTreeRequest'
+      responses:
+        '200':
+          description: The decision tree of results.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v2/authz/query:
+    post:
+      operationId: query
+      tags:
+      - Authorizer
+      summary: Query (arbitrary OPA/Rego query)
+      description: Runs an arbitrary Rego query against the loaded policy and directory data, with optional identity, policy, and resource context. The most flexible, lowest-level decision call.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: The query result set.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    IdentityContext:
+      type: object
+      description: Who is making the request.
+      properties:
+        identity:
+          type: string
+        type:
+          type: string
+          description: One of IDENTITY_TYPE_NONE, IDENTITY_TYPE_SUB, IDENTITY_TYPE_JWT, IDENTITY_TYPE_MANUAL.
+          example: IDENTITY_TYPE_SUB
+    IsRequest:
+      type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/IdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/PolicyContext'
+        resource_context:
+          type: object
+          additionalProperties: true
+    IsResponse:
+      type: object
+      properties:
+        decisions:
+          type: array
+          items:
+            type: object
+            properties:
+              decision:
+                type: string
+              is:
+                type: boolean
+    PolicyContext:
+      type: object
+      description: Which policy and decisions to evaluate.
+      properties:
+        path:
+          type: string
+          example: rebac.check
+        decisions:
+          type: array
+          items:
+            type: string
+          example:
+          - allowed
+    QueryRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          example: x = data
+        identity_context:
+          $ref: '#/components/schemas/IdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/PolicyContext'
+        resource_context:
+          type: object
+          additionalProperties: true
+    DecisionTreeRequest:
+      type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/IdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/PolicyContext'
+        resource_context:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: Authentication failed or the API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Self-hosted Topaz may run with no authentication (default), with a static API key, or behind mTLS. When keys are configured (and on the Aserto hosted service) pass the key in the Authorization header, along with the Aserto-Tenant-Id header on Aserto.

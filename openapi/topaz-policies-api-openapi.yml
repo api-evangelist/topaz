@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Topaz and Directory Authorizer Policies API
+  description: 'Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz). It combines the Open Policy Agent (OPA) decision engine with a built-in Zanzibar-style relationship directory. Topaz is SELF-HOSTED: you run the authorizer yourself (Docker image ghcr.io/aserto-dev/topaz or a binary), and it exposes gRPC plus REST (gRPC-gateway) APIs from your own instance. The base URL is therefore your own deployment - by default the REST gateway listens on https://localhost:8383 (authorizer gRPC on :8282, directory gRPC on :9292, local web Console on :8080). In split deployments the directory REST endpoints may be exposed on :9393. This document models the REST surface: the Authorizer API (is / decisiontree / query and policy listing) under /api/v2, and the Directory v3 API (objects, relations, and checks) under /api/v3/directory. Aserto is the commercial hosted control plane built on Topaz; on Aserto the same contracts are served from tenant-scoped hosts such as https://authorizer.prod.aserto.com and https://directory.prod.aserto.com.'
+  version: '1.0'
+  contact:
+    name: Topaz
+    url: https://www.topaz.sh
+  license:
+    name: Apache-2.0
+    url: https://github.com/aserto-dev/topaz/blob/main/LICENSE
+servers:
+- url: https://localhost:8383
+  description: Self-hosted Topaz REST gateway (default). Replace with your own instance host.
+- url: https://authorizer.prod.aserto.com
+  description: Aserto hosted control plane (Authorizer API), tenant-scoped.
+- url: https://directory.prod.aserto.com
+  description: Aserto hosted control plane (Directory API), tenant-scoped.
+security:
+- apiKey: []
+tags:
+- name: Policies
+  description: OPA policy modules loaded into the authorizer.
+paths:
+  /api/v2/policies:
+    get:
+      operationId: listPolicies
+      tags:
+      - Policies
+      summary: List loaded policy modules
+      description: Lists the OPA policy modules currently loaded into the authorizer.
+      responses:
+        '200':
+          description: The loaded policy modules.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v2/policies/{id}:
+    get:
+      operationId: getPolicy
+      tags:
+      - Policies
+      summary: Get a policy module
+      description: Retrieves a single loaded OPA policy module by id.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested policy module.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Self-hosted Topaz may run with no authentication (default), with a static API key, or behind mTLS. When keys are configured (and on the Aserto hosted service) pass the key in the Authorization header, along with the Aserto-Tenant-Id header on Aserto.
