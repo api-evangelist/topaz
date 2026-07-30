@@ -14,7 +14,19 @@ description: Topaz is an open-source (Apache-2.0) authorizer for fine-grained,
   and permission checks; and a local web Console ships alongside. Aserto is the
   commercial hosted control plane built on Topaz for centrally managing policies,
   data, and decision logs across many deployed authorizers.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/topaz.png
 tags:
 - Access Control
 - Authorization
@@ -31,114 +43,124 @@ specificationVersion: '0.19'
 apis:
 - aid: topaz:topaz-authorizer-api
   name: Topaz Authorizer API
-  tags:
-  - Access Control
-  - Authorization
-  - Fine-Grained Authorization
-  - Decisions
-  - OPA
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  description: Policy-driven decisions - is, decisiontree, and query - evaluated by the OPA engine.
   humanURL: https://www.topaz.sh/docs/authorizer-guide/overview
   baseURL: https://localhost:8383
-  properties:
-  - url: https://www.topaz.sh/docs/authorizer-guide/overview
-    type: Documentation
-  - url: https://www.topaz.sh/docs/authorizer-guide/is
-    type: APIReference
-  - url: openapi/topaz-openapi.yml
-    type: OpenAPI
-  - url: collections/topaz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/topaz.opencollection.json
-    type: OpenCollection
-  description: The decision API. POST is (allowed/denied for a user, action, and
-    resource), decisiontree (evaluate many decisions at a policy path in one call),
-    and query (run an arbitrary Rego/OPA query), each taking an identityContext,
-    policyContext, and optional resourceContext. Also lists the OPA policy modules
-    loaded into the authorizer. Served over gRPC (default :8282) and REST via the
-    gRPC-gateway (default :8383) from your own self-hosted instance.
-- aid: topaz:topaz-directory-objects-api
-  name: Topaz Directory Objects API
   tags:
-  - Access Control
-  - Directory
-  - Objects
-  - Zanzibar
-  - RBAC
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.topaz.sh/docs/directory/apis
-  baseURL: https://localhost:8383
+  - Authorizer
   properties:
-  - url: https://www.topaz.sh/docs/directory
-    type: Documentation
-  - url: https://www.topaz.sh/docs/directory/writer
-    type: APIReference
-  - url: openapi/topaz-openapi.yml
-    type: OpenAPI
-  - url: collections/topaz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/topaz.opencollection.json
-    type: OpenCollection
-  description: The Directory v3 object graph. Read a single object by type and id,
-    list objects of a type, and (writer) create/update or delete objects - the
-    users, groups, resources, and other entities that authorization decisions are
-    made about - plus get and set the directory manifest (the object-type and
-    relation model). The embedded directory is a Zanzibar-inspired store bundled
-    with the self-hosted authorizer.
-- aid: topaz:topaz-directory-relations-api
-  name: Topaz Directory Relations API
-  tags:
-  - Access Control
-  - Directory
-  - Relations
-  - ReBAC
-  - Zanzibar
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.topaz.sh/docs/directory/apis
-  baseURL: https://localhost:8383
-  properties:
-  - url: https://www.topaz.sh/docs/directory
-    type: Documentation
-  - url: https://www.topaz.sh/docs/directory/writer
-    type: APIReference
-  - url: openapi/topaz-openapi.yml
-    type: OpenAPI
-  - url: collections/topaz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/topaz.opencollection.json
-    type: OpenCollection
-  description: The Directory v3 relationship graph. Get a single relation, list
-    relations (with optional traversal), walk the object graph, and (writer)
-    create/update or delete relations - the tuples that connect subjects to objects
-    (for example, user X is a member of group Y, group Y is an owner of resource Z).
-    Relations are the ReBAC/Zanzibar backbone Topaz evaluates during checks.
+  - type: OpenAPI
+    url: openapi/topaz-authorizer-api-openapi.yml
+  - type: Documentation
+    url: https://www.topaz.sh/docs/authorizer-guide/overview
+  - type: APIReference
+    url: https://www.topaz.sh/docs/authorizer-guide/is
+  - type: PostmanCollection
+    url: collections/topaz.postman_collection.json
+  - type: OpenCollection
+    url: collections/topaz.opencollection.json
+  - type: Documentation
+    url: https://www.topaz.sh/docs/directory
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/writer
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/apis
 - aid: topaz:topaz-directory-checks-api
   name: Topaz Directory Checks API
-  tags:
-  - Access Control
-  - Authorization
-  - Fine-Grained Authorization
-  - Checks
-  - ReBAC
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.topaz.sh/docs/directory/apis
+  description: Graph-based check and graph-expansion queries over the directory.
+  humanURL: https://www.topaz.sh/docs/authorizer-guide/overview
   baseURL: https://localhost:8383
+  tags:
+  - Directory Checks
   properties:
-  - url: https://www.topaz.sh/docs/directory
-    type: Documentation
-  - url: https://www.topaz.sh/docs/directory/apis
-    type: APIReference
-  - url: openapi/topaz-openapi.yml
-    type: OpenAPI
-  - url: collections/topaz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/topaz.opencollection.json
-    type: OpenCollection
-  description: The Directory v3 check surface for graph-based access decisions. POST
-    check to ask whether a subject has a given relation or permission on an object
-    by traversing the relationship graph, and use the graph endpoint to expand the
-    set of subjects or objects reachable through a relation. This is the
-    data-driven, Zanzibar-style complement to the policy-driven Authorizer is API.
+  - type: OpenAPI
+    url: openapi/topaz-directory-checks-api-openapi.yml
+  - type: Documentation
+    url: https://www.topaz.sh/docs/authorizer-guide/overview
+  - type: APIReference
+    url: https://www.topaz.sh/docs/authorizer-guide/is
+  - type: PostmanCollection
+    url: collections/topaz.postman_collection.json
+  - type: OpenCollection
+    url: collections/topaz.opencollection.json
+  - type: Documentation
+    url: https://www.topaz.sh/docs/directory
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/writer
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/apis
+- aid: topaz:topaz-directory-objects-api
+  name: Topaz Directory Objects API
+  description: Objects in the Zanzibar-style directory - users, groups, resources, and other entities.
+  humanURL: https://www.topaz.sh/docs/authorizer-guide/overview
+  baseURL: https://localhost:8383
+  tags:
+  - Directory Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/topaz-directory-objects-api-openapi.yml
+  - type: Documentation
+    url: https://www.topaz.sh/docs/authorizer-guide/overview
+  - type: APIReference
+    url: https://www.topaz.sh/docs/authorizer-guide/is
+  - type: PostmanCollection
+    url: collections/topaz.postman_collection.json
+  - type: OpenCollection
+    url: collections/topaz.opencollection.json
+  - type: Documentation
+    url: https://www.topaz.sh/docs/directory
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/writer
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/apis
+- aid: topaz:topaz-directory-relations-api
+  name: Topaz Directory Relations API
+  description: Relations (tuples) connecting subjects to objects in the directory graph.
+  humanURL: https://www.topaz.sh/docs/authorizer-guide/overview
+  baseURL: https://localhost:8383
+  tags:
+  - Directory Relations
+  properties:
+  - type: OpenAPI
+    url: openapi/topaz-directory-relations-api-openapi.yml
+  - type: Documentation
+    url: https://www.topaz.sh/docs/authorizer-guide/overview
+  - type: APIReference
+    url: https://www.topaz.sh/docs/authorizer-guide/is
+  - type: PostmanCollection
+    url: collections/topaz.postman_collection.json
+  - type: OpenCollection
+    url: collections/topaz.opencollection.json
+  - type: Documentation
+    url: https://www.topaz.sh/docs/directory
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/writer
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/apis
+- aid: topaz:topaz-policies-api
+  name: Topaz Policies API
+  description: OPA policy modules loaded into the authorizer.
+  humanURL: https://www.topaz.sh/docs/authorizer-guide/overview
+  baseURL: https://localhost:8383
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/topaz-policies-api-openapi.yml
+  - type: Documentation
+    url: https://www.topaz.sh/docs/authorizer-guide/overview
+  - type: APIReference
+    url: https://www.topaz.sh/docs/authorizer-guide/is
+  - type: PostmanCollection
+    url: collections/topaz.postman_collection.json
+  - type: OpenCollection
+    url: collections/topaz.opencollection.json
+  - type: Documentation
+    url: https://www.topaz.sh/docs/directory
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/writer
+  - type: APIReference
+    url: https://www.topaz.sh/docs/directory/apis
 common:
 - type: AgenticAccess
   url: agentic-access/topaz-agentic-access.yml
