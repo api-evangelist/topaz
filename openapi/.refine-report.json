@@ -1,0 +1,22 @@
+{
+  "provider": "topaz",
+  "sources": [
+    "topaz-authorizer-api-openapi.yml",
+    "topaz-directory-checks-api-openapi.yml",
+    "topaz-directory-objects-api-openapi.yml",
+    "topaz-directory-relations-api-openapi.yml",
+    "topaz-policies-api-openapi.yml"
+  ],
+  "outputs": [
+    "topaz-authorizer-api-openapi.yml",
+    "topaz-directory-checks-api-openapi.yml",
+    "topaz-directory-objects-api-openapi.yml",
+    "topaz-directory-relations-api-openapi.yml",
+    "topaz-policies-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
