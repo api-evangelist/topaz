@@ -1,0 +1,526 @@
+{
+  "item": [
+    {
+      "id": "733b0d3d-0394-4368-a642-b1486162f05e",
+      "name": "Authorizer",
+      "description": {
+        "content": "Policy-driven decisions - is, decisiontree, and query - evaluated by the OPA engine.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "af32d669-334d-47e5-bdd2-411877a2a9ee",
+          "name": "Is (authorization decision)",
+          "request": {
+            "name": "Is (authorization decision)",
+            "description": {
+              "content": "Returns whether the identity in identityContext is allowed the decision(s) named in policyContext for the resource in resourceContext. The primary allowed/denied API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "authz",
+                "is"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"policy_context\": {\n    \"path\": \"<string>\",\n    \"decisions\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": 6991,\n    \"key_1\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7eafa6bc-125f-4e31-a5bd-9de842daf042",
+              "name": "The evaluated decisions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "authz",
+                    "is"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"IDENTITY_TYPE_SUB\"\n  },\n  \"policy_context\": {\n    \"path\": \"rebac.check\",\n    \"decisions\": [\n      \"allowed\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": 1139\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"decisions\": [\n    {\n      \"decision\": \"string\",\n      \"is\": false\n    },\n    {\n      \"decision\": \"string\",\n      \"is\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73e84d05-6ca2-4109-857a-fd8450bdd18d",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "authz",
+                    "is"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"IDENTITY_TYPE_SUB\"\n  },\n  \"policy_context\": {\n    \"path\": \"rebac.check\",\n    \"decisions\": [\n      \"allowed\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": 1139\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4850,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c198804f-c8ef-4980-ad2b-376c77fa928f",
+          "name": "Decision tree",
+          "request": {
+            "name": "Decision tree",
+            "description": {
+              "content": "Evaluates every decision at (or below) a policy path in a single call and returns the tree of results, so a client can render, for example, a UI's enabled/disabled state in one round trip.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "authz",
+                "decisiontree"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"policy_context\": {\n    \"path\": \"<string>\",\n    \"decisions\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "76f2bcc8-d40a-4c1d-81e3-010b5c310421",
+              "name": "The decision tree of results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "authz",
+                    "decisiontree"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"IDENTITY_TYPE_SUB\"\n  },\n  \"policy_context\": {\n    \"path\": \"rebac.check\",\n    \"decisions\": [\n      \"allowed\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": 1139\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8ba46cf-a06b-4ac1-8d74-59003d6be48b",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "authz",
+                    "decisiontree"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"IDENTITY_TYPE_SUB\"\n  },\n  \"policy_context\": {\n    \"path\": \"rebac.check\",\n    \"decisions\": [\n      \"allowed\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": 1139\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4850,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "834b50e6-a1ef-4fa5-8be6-39c981c6e7ed",
+          "name": "Query (arbitrary OPA/Rego query)",
+          "request": {
+            "name": "Query (arbitrary OPA/Rego query)",
+            "description": {
+              "content": "Runs an arbitrary Rego query against the loaded policy and directory data, with optional identity, policy, and resource context. The most flexible, lowest-level decision call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "authz",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"policy_context\": {\n    \"path\": \"<string>\",\n    \"decisions\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": 9001\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "592dbd32-991c-4cd8-a11d-90bdf6ea57a7",
+              "name": "The query result set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "authz",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"x = data\",\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"IDENTITY_TYPE_SUB\"\n  },\n  \"policy_context\": {\n    \"path\": \"rebac.check\",\n    \"decisions\": [\n      \"allowed\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04a96b76-b77c-4291-8fe1-c69cb2fffd86",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "authz",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"x = data\",\n  \"identity_context\": {\n    \"identity\": \"<string>\",\n    \"type\": \"IDENTITY_TYPE_SUB\"\n  },\n  \"policy_context\": {\n    \"path\": \"rebac.check\",\n    \"decisions\": [\n      \"allowed\"\n    ]\n  },\n  \"resource_context\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4850,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://localhost:8383",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "50651419-9d8a-41a2-a19c-e4c337fce706",
+    "name": "Topaz and Directory Authorizer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz). It combines the Open Policy Agent (OPA) decision engine with a built-in Zanzibar-style relationship directory. Topaz is SELF-HOSTED: you run the authorizer yourself (Docker image ghcr.io/aserto-dev/topaz or a binary), and it exposes gRPC plus REST (gRPC-gateway) APIs from your own instance. The base URL is therefore your own deployment - by default the REST gateway listens on https://localhost:8383 (authorizer gRPC on :8282, directory gRPC on :9292, local web Console on :8080). In split deployments the directory REST endpoints may be exposed on :9393. This document models the REST surface: the Authorizer API (is / decisiontree / query and policy listing) under /api/v2, and the Directory v3 API (objects, relations, and checks) under /api/v3/directory. Aserto is the commercial hosted control plane built on Topaz; on Aserto the same contracts are served from tenant-scoped hosts such as https://authorizer.prod.aserto.com and https://directory.prod.aserto.com.\n\nContact Support:\n Name: Topaz",
+      "type": "text/plain"
+    }
+  }
+}

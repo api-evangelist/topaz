@@ -1,0 +1,406 @@
+{
+  "item": [
+    {
+      "id": "ab351b7d-2cf7-4c70-995d-95777917093a",
+      "name": "Directory Checks",
+      "description": {
+        "content": "Graph-based check and graph-expansion queries over the directory.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6066298f-2da6-41bf-a430-d1f42f0c74fa",
+          "name": "Check",
+          "request": {
+            "name": "Check",
+            "description": {
+              "content": "Returns whether a subject has a given relation or permission on an object by traversing the directory relationship graph. The data-driven, Zanzibar-style access check.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "directory",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"object_type\": \"<string>\",\n  \"object_id\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_type\": \"<string>\",\n  \"subject_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9c0dcbc-eed0-4b66-8410-a623f08f5a02",
+              "name": "The check result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"object_type\": \"<string>\",\n  \"object_id\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_type\": \"<string>\",\n  \"subject_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"check\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5917ac1a-bf40-4d72-970f-008ce8eb775d",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"object_type\": \"<string>\",\n  \"object_id\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_type\": \"<string>\",\n  \"subject_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1399,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61f9bffb-b068-425e-ae1d-082f91630c59",
+          "name": "Get graph",
+          "request": {
+            "name": "Get graph",
+            "description": {
+              "content": "Expands the object graph from an anchor to return the set of subjects or objects reachable through a relation (for example, all users who are members of a group, directly or transitively).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "directory",
+                "graph"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "912098ca-1eb0-430e-8f3a-8213867a20c1",
+              "name": "The expanded graph result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cea63daa-f491-4c80-9563-4a25d4d06d3f",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1399,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://localhost:8383",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1f1a8190-307d-46da-9da6-193903a01ef0",
+    "name": "Topaz and Directory Authorizer Directory Checks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz). It combines the Open Policy Agent (OPA) decision engine with a built-in Zanzibar-style relationship directory. Topaz is SELF-HOSTED: you run the authorizer yourself (Docker image ghcr.io/aserto-dev/topaz or a binary), and it exposes gRPC plus REST (gRPC-gateway) APIs from your own instance. The base URL is therefore your own deployment - by default the REST gateway listens on https://localhost:8383 (authorizer gRPC on :8282, directory gRPC on :9292, local web Console on :8080). In split deployments the directory REST endpoints may be exposed on :9393. This document models the REST surface: the Authorizer API (is / decisiontree / query and policy listing) under /api/v2, and the Directory v3 API (objects, relations, and checks) under /api/v3/directory. Aserto is the commercial hosted control plane built on Topaz; on Aserto the same contracts are served from tenant-scoped hosts such as https://authorizer.prod.aserto.com and https://directory.prod.aserto.com.\n\nContact Support:\n Name: Topaz",
+      "type": "text/plain"
+    }
+  }
+}

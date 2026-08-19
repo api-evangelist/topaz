@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Topaz and Directory Authorizer API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorizer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Is (authorization decision)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8383/api/v2/authz/is",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns whether the identity in identityContext is allowed the decision(s) named in policyContext for the resource in resourceContext. The primary allowed/denied API."
+        },
+        {
+          "info": {
+            "name": "Decision tree",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8383/api/v2/authz/decisiontree",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Evaluates every decision at (or below) a policy path in a single call and returns the tree of results, so a client can render, for example, a UI's enabled/disabled state in one round trip."
+        },
+        {
+          "info": {
+            "name": "Query (arbitrary OPA/Rego query)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8383/api/v2/authz/query",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs an arbitrary Rego query against the loaded policy and directory data, with optional identity, policy, and resource context. The most flexible, lowest-level decision call."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

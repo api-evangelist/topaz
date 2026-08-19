@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Topaz and Directory Authorizer Directory Relations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Directory Relations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get relation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8383/api/v3/directory/relation",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a single relation (tuple) identified by its object, relation name, and subject."
+        },
+        {
+          "info": {
+            "name": "Set relation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8383/api/v3/directory/relation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates a relation between a subject and an object."
+        },
+        {
+          "info": {
+            "name": "Delete relation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://localhost:8383/api/v3/directory/relation",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a relation identified by its object, relation name, and subject."
+        },
+        {
+          "info": {
+            "name": "List relations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8383/api/v3/directory/relations",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page.size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists relations matching an optional object and/or subject filter, with pagination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,895 @@
+{
+  "item": [
+    {
+      "id": "391af40a-7405-4e53-bd46-24620a6ef246",
+      "name": "Directory Relations",
+      "description": {
+        "content": "Relations (tuples) connecting subjects to objects in the directory graph.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f75dd6d-a411-49dc-bdab-36b46e45903a",
+          "name": "Get relation",
+          "request": {
+            "name": "Get relation",
+            "description": {
+              "content": "Retrieves a single relation (tuple) identified by its object, relation name, and subject.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "directory",
+                "relation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e97b6be-00cd-4dea-929b-8a5d6bf28cde",
+              "name": "The requested relation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object_type\": \"group\",\n  \"object_id\": \"admin\",\n  \"relation\": \"member\",\n  \"subject_type\": \"user\",\n  \"subject_id\": \"euang@acmecorp.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32f0daa0-56e3-4b78-9bf7-85ff9f4a2404",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2964,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "795896e8-090f-4273-953b-8930d7893aa3",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2964,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a1a784f-694b-4da8-b9c5-f1a41b1e28fc",
+          "name": "Set relation",
+          "request": {
+            "name": "Set relation",
+            "description": {
+              "content": "Creates or updates a relation between a subject and an object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "directory",
+                "relation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"relation\": {\n    \"object_type\": \"<string>\",\n    \"object_id\": \"<string>\",\n    \"relation\": \"<string>\",\n    \"subject_type\": \"<string>\",\n    \"subject_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b721e20d-0486-4d07-8a8c-9ba79656792f",
+              "name": "The created or updated relation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"relation\": {\n    \"object_type\": \"group\",\n    \"object_id\": \"admin\",\n    \"relation\": \"member\",\n    \"subject_type\": \"user\",\n    \"subject_id\": \"euang@acmecorp.com\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object_type\": \"group\",\n  \"object_id\": \"admin\",\n  \"relation\": \"member\",\n  \"subject_type\": \"user\",\n  \"subject_id\": \"euang@acmecorp.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cecd699-7ef2-4069-b432-917590b99de7",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"relation\": {\n    \"object_type\": \"group\",\n    \"object_id\": \"admin\",\n    \"relation\": \"member\",\n    \"subject_type\": \"user\",\n    \"subject_id\": \"euang@acmecorp.com\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2964,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df9f30c2-43dd-4465-9e53-7426a05e2e67",
+          "name": "Delete relation",
+          "request": {
+            "name": "Delete relation",
+            "description": {
+              "content": "Deletes a relation identified by its object, relation name, and subject.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "directory",
+                "relation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9035685e-12e9-4bc9-a45e-a3885c0548cc",
+              "name": "Deletion result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6a6d570-8cad-44a6-82d0-976ee0b736a7",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2964,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ed66e64-c3a8-4028-b1ee-99e866c5e36d",
+          "name": "List relations",
+          "request": {
+            "name": "List relations",
+            "description": {
+              "content": "Lists relations matching an optional object and/or subject filter, with pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "directory",
+                "relations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page.size",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95d21d8f-5702-4a2f-81fa-49760873e5cc",
+              "name": "A page of relations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page.size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"object_type\": \"group\",\n      \"object_id\": \"admin\",\n      \"relation\": \"member\",\n      \"subject_type\": \"user\",\n      \"subject_id\": \"euang@acmecorp.com\"\n    },\n    {\n      \"object_type\": \"group\",\n      \"object_id\": \"admin\",\n      \"relation\": \"member\",\n      \"subject_type\": \"user\",\n      \"subject_id\": \"euang@acmecorp.com\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2ac54ee-4ce8-47d6-b95a-5ca8ad556bbb",
+              "name": "Authentication failed or the API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "directory",
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page.size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2964,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://localhost:8383",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b52c2fdd-9286-417f-9e33-a86e0405a611",
+    "name": "Topaz and Directory Authorizer Directory Relations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz). It combines the Open Policy Agent (OPA) decision engine with a built-in Zanzibar-style relationship directory. Topaz is SELF-HOSTED: you run the authorizer yourself (Docker image ghcr.io/aserto-dev/topaz or a binary), and it exposes gRPC plus REST (gRPC-gateway) APIs from your own instance. The base URL is therefore your own deployment - by default the REST gateway listens on https://localhost:8383 (authorizer gRPC on :8282, directory gRPC on :9292, local web Console on :8080). In split deployments the directory REST endpoints may be exposed on :9393. This document models the REST surface: the Authorizer API (is / decisiontree / query and policy listing) under /api/v2, and the Directory v3 API (objects, relations, and checks) under /api/v3/directory. Aserto is the commercial hosted control plane built on Topaz; on Aserto the same contracts are served from tenant-scoped hosts such as https://authorizer.prod.aserto.com and https://directory.prod.aserto.com.\n\nContact Support:\n Name: Topaz",
+      "type": "text/plain"
+    }
+  }
+}

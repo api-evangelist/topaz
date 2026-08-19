@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Topaz and Directory Authorizer Directory Checks API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Directory Checks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8383/api/v3/directory/check",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns whether a subject has a given relation or permission on an object by traversing the directory relationship graph. The data-driven, Zanzibar-style access check."
+        },
+        {
+          "info": {
+            "name": "Get graph",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8383/api/v3/directory/graph",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Expands the object graph from an anchor to return the set of subjects or objects reachable through a relation (for example, all users who are members of a group, directly or transitively)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

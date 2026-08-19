@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Topaz and Directory Authorizer Directory Objects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Directory Objects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8383/api/v3/directory/object/:object_type/:object_id",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "path",
+                "description": "The object type, for example user, group, or resource."
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "The object identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves a single directory object by its type and id."
+        },
+        {
+          "info": {
+            "name": "Delete object",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://localhost:8383/api/v3/directory/object/:object_type/:object_id",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "path",
+                "description": "The object type, for example user, group, or resource."
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "The object identifier."
+              }
+            ]
+          },
+          "docs": "Deletes a directory object by its type and id."
+        },
+        {
+          "info": {
+            "name": "List objects of a type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8383/api/v3/directory/objects/:object_type",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "path",
+                "description": "The object type, for example user, group, or resource."
+              },
+              {
+                "name": "page.size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists directory objects of a given type, with pagination."
+        },
+        {
+          "info": {
+            "name": "Set object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8383/api/v3/directory/object",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates a directory object."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
