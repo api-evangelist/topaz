@@ -14,6 +14,20 @@ description: Topaz is an open-source (Apache-2.0) authorizer for fine-grained,
   and permission checks; and a local web Console ships alongside. Aserto is the
   commercial hosted control plane built on Topaz for centrally managing policies,
   data, and decision logs across many deployed authorizers.
+deliveryModel:
+  model: open-core
+  license: Apache-2.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
@@ -172,6 +186,16 @@ apis:
   - type: APIReference
     url: https://www.topaz.sh/docs/directory/apis
 common:
+- type: IssueTracker
+  url: https://github.com/aserto-dev/topaz/issues
+- type: Releases
+  url: https://github.com/aserto-dev/topaz/releases
+- type: SecurityPolicy
+  url: https://github.com/aserto-dev/topaz/blob/main/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/aserto-dev/topaz/blob/main/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/aserto-dev/topaz/blob/main/CONTRIBUTING.md
 - type: License
   name: Apache-2.0
   url: https://github.com/aserto-dev/topaz/blob/main/LICENSE
