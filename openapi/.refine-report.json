@@ -1,11 +1,7 @@
 {
   "provider": "topaz",
   "sources": [
-    "topaz-authorizer-api-openapi.yml",
-    "topaz-directory-checks-api-openapi.yml",
-    "topaz-directory-objects-api-openapi.yml",
-    "topaz-directory-relations-api-openapi.yml",
-    "topaz-policies-api-openapi.yml"
+    "_original/topaz-openapi.yml"
   ],
   "outputs": [
     "topaz-authorizer-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "topaz-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "topaz-authorizer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "topaz-directory-checks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "topaz-directory-objects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "topaz-directory-relations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "topaz-policies-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

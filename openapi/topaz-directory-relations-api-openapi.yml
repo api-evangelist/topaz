@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Topaz and Directory Authorizer Directory Relations API
-  description: 'Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz). It combines the Open Policy Agent (OPA) decision engine with a built-in Zanzibar-style relationship directory. Topaz is SELF-HOSTED: you run the authorizer yourself (Docker image ghcr.io/aserto-dev/topaz or a binary), and it exposes gRPC plus REST (gRPC-gateway) APIs from your own instance. The base URL is therefore your own deployment - by default the REST gateway listens on https://localhost:8383 (authorizer gRPC on :8282, directory gRPC on :9292, local web Console on :8080). In split deployments the directory REST endpoints may be exposed on :9393. This document models the REST surface: the Authorizer API (is / decisiontree / query and policy listing) under /api/v2, and the Directory v3 API (objects, relations, and checks) under /api/v3/directory. Aserto is the commercial hosted control plane built on Topaz; on Aserto the same contracts are served from tenant-scoped hosts such as https://authorizer.prod.aserto.com and https://directory.prod.aserto.com.'
+  title: Topaz Authorizer and Directory Directory Relations API
+  description: Topaz is an open-source (Apache-2.0) authorizer for fine-grained, policy-based, real-time access control, maintained by Aserto (github.com/aserto-dev/topaz).
   version: '1.0'
   contact:
     name: Topaz
