@@ -90,6 +90,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    IdentityContext:
+      type: object
+      description: Who is making the request.
+      properties:
+        identity:
+          type: string
+        type:
+          type: string
+          description: One of IDENTITY_TYPE_NONE, IDENTITY_TYPE_SUB, IDENTITY_TYPE_JWT, IDENTITY_TYPE_MANUAL.
+          example: IDENTITY_TYPE_SUB
     QueryRequest:
       type: object
       properties:
@@ -123,16 +133,6 @@ components:
             type: string
           example:
           - allowed
-    DecisionTreeRequest:
-      type: object
-      properties:
-        identity_context:
-          $ref: '#/components/schemas/IdentityContext'
-        policy_context:
-          $ref: '#/components/schemas/PolicyContext'
-        resource_context:
-          type: object
-          additionalProperties: true
     IsResponse:
       type: object
       properties:
@@ -145,17 +145,17 @@ components:
                 type: string
               is:
                 type: boolean
-    IdentityContext:
-      type: object
-      description: Who is making the request.
-      properties:
-        identity:
-          type: string
-        type:
-          type: string
-          description: One of IDENTITY_TYPE_NONE, IDENTITY_TYPE_SUB, IDENTITY_TYPE_JWT, IDENTITY_TYPE_MANUAL.
-          example: IDENTITY_TYPE_SUB
     IsRequest:
+      type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/IdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/PolicyContext'
+        resource_context:
+          type: object
+          additionalProperties: true
+    DecisionTreeRequest:
       type: object
       properties:
         identity_context:

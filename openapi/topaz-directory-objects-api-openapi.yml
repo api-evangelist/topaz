@@ -139,14 +139,20 @@ components:
         properties:
           type: object
           additionalProperties: true
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed or the API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    ObjectId:
-      name: object_id
-      in: path
-      required: true
-      description: The object identifier.
-      schema:
-        type: string
     ObjectType:
       name: object_type
       in: path
@@ -154,19 +160,13 @@ components:
       description: The object type, for example user, group, or resource.
       schema:
         type: string
-  responses:
-    Unauthorized:
-      description: Authentication failed or the API key is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    ObjectId:
+      name: object_id
+      in: path
+      required: true
+      description: The object identifier.
+      schema:
+        type: string
   securitySchemes:
     apiKey:
       type: apiKey

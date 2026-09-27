@@ -45,7 +45,7 @@ tags:
 - Access Control
 - Authorization
 - Fine-Grained Authorization
-- Open-Source
+- Open Source
 - RBAC
 - ReBAC
 - Zanzibar
@@ -61,6 +61,7 @@ tags_raw:
 - Zanzibar
 - OPA
 - Policy as Code
+- Open-Source
 created: '2026-07-11'
 modified: '2026-07-11'
 specificationVersion: '0.23'
