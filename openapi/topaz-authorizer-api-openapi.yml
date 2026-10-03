@@ -100,6 +100,35 @@ components:
           type: string
           description: One of IDENTITY_TYPE_NONE, IDENTITY_TYPE_SUB, IDENTITY_TYPE_JWT, IDENTITY_TYPE_MANUAL.
           example: IDENTITY_TYPE_SUB
+    IsResponse:
+      type: object
+      properties:
+        decisions:
+          type: array
+          items:
+            type: object
+            properties:
+              decision:
+                type: string
+              is:
+                type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    IsRequest:
+      type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/IdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/PolicyContext'
+        resource_context:
+          type: object
+          additionalProperties: true
     QueryRequest:
       type: object
       properties:
@@ -113,13 +142,6 @@ components:
         resource_context:
           type: object
           additionalProperties: true
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     PolicyContext:
       type: object
       description: Which policy and decisions to evaluate.
@@ -133,28 +155,6 @@ components:
             type: string
           example:
           - allowed
-    IsResponse:
-      type: object
-      properties:
-        decisions:
-          type: array
-          items:
-            type: object
-            properties:
-              decision:
-                type: string
-              is:
-                type: boolean
-    IsRequest:
-      type: object
-      properties:
-        identity_context:
-          $ref: '#/components/schemas/IdentityContext'
-        policy_context:
-          $ref: '#/components/schemas/PolicyContext'
-        resource_context:
-          type: object
-          additionalProperties: true
     DecisionTreeRequest:
       type: object
       properties:
