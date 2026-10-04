@@ -83,13 +83,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
+    CheckResponse:
       type: object
       properties:
-        code:
-          type: integer
-        message:
-          type: string
+        check:
+          type: boolean
     CheckRequest:
       type: object
       properties:
@@ -103,11 +101,13 @@ components:
           type: string
         subject_id:
           type: string
-    CheckResponse:
+    Error:
       type: object
       properties:
-        check:
-          type: boolean
+        code:
+          type: integer
+        message:
+          type: string
   responses:
     Unauthorized:
       description: Authentication failed or the API key is missing or invalid.

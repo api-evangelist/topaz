@@ -117,41 +117,19 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-    Object:
-      type: object
-      properties:
-        type:
-          type: string
-          example: user
-        id:
-          type: string
-          example: euang@acmecorp.com
-        display_name:
-          type: string
-        properties:
-          type: object
-          additionalProperties: true
   parameters:
-    ObjectId:
-      name: object_id
-      in: path
-      required: true
-      description: The object identifier.
-      schema:
-        type: string
     ObjectType:
       name: object_type
       in: path
       required: true
       description: The object type, for example user, group, or resource.
+      schema:
+        type: string
+    ObjectId:
+      name: object_id
+      in: path
+      required: true
+      description: The object identifier.
       schema:
         type: string
   responses:
@@ -167,6 +145,28 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    Object:
+      type: object
+      properties:
+        type:
+          type: string
+          example: user
+        id:
+          type: string
+          example: euang@acmecorp.com
+        display_name:
+          type: string
+        properties:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
   securitySchemes:
     apiKey:
       type: apiKey
