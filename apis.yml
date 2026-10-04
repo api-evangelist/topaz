@@ -187,6 +187,9 @@ apis:
   - type: APIReference
     url: https://www.topaz.sh/docs/directory/apis
 common:
+- type: CapabilityMap
+  url: capabilities/topaz-capability-edges.yml
+  name: Topaz Business Capability Map
 - type: IssueTracker
   url: https://github.com/aserto-dev/topaz/issues
 - type: Releases
