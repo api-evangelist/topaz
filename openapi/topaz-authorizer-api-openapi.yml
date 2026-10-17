@@ -90,19 +90,25 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    QueryRequest:
+    IsResponse:
       type: object
       properties:
-        query:
+        decisions:
+          type: array
+          items:
+            type: object
+            properties:
+              decision:
+                type: string
+              is:
+                type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
           type: string
-          example: x = data
-        identity_context:
-          $ref: '#/components/schemas/IdentityContext'
-        policy_context:
-          $ref: '#/components/schemas/PolicyContext'
-        resource_context:
-          type: object
-          additionalProperties: true
     PolicyContext:
       type: object
       description: Which policy and decisions to evaluate.
@@ -116,28 +122,6 @@ components:
             type: string
           example:
           - allowed
-    IdentityContext:
-      type: object
-      description: Who is making the request.
-      properties:
-        identity:
-          type: string
-        type:
-          type: string
-          description: One of IDENTITY_TYPE_NONE, IDENTITY_TYPE_SUB, IDENTITY_TYPE_JWT, IDENTITY_TYPE_MANUAL.
-          example: IDENTITY_TYPE_SUB
-    IsResponse:
-      type: object
-      properties:
-        decisions:
-          type: array
-          items:
-            type: object
-            properties:
-              decision:
-                type: string
-              is:
-                type: boolean
     IsRequest:
       type: object
       properties:
@@ -158,13 +142,29 @@ components:
         resource_context:
           type: object
           additionalProperties: true
-    Error:
+    IdentityContext:
+      type: object
+      description: Who is making the request.
+      properties:
+        identity:
+          type: string
+        type:
+          type: string
+          description: One of IDENTITY_TYPE_NONE, IDENTITY_TYPE_SUB, IDENTITY_TYPE_JWT, IDENTITY_TYPE_MANUAL.
+          example: IDENTITY_TYPE_SUB
+    QueryRequest:
       type: object
       properties:
-        code:
-          type: integer
-        message:
+        query:
           type: string
+          example: x = data
+        identity_context:
+          $ref: '#/components/schemas/IdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/PolicyContext'
+        resource_context:
+          type: object
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Authentication failed or the API key is missing or invalid.

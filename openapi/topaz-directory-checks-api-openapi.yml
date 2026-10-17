@@ -82,12 +82,21 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or the API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    CheckResponse:
+    Error:
       type: object
       properties:
-        check:
-          type: boolean
+        code:
+          type: integer
+        message:
+          type: string
     CheckRequest:
       type: object
       properties:
@@ -101,20 +110,11 @@ components:
           type: string
         subject_id:
           type: string
-    Error:
+    CheckResponse:
       type: object
       properties:
-        code:
-          type: integer
-        message:
-          type: string
-  responses:
-    Unauthorized:
-      description: Authentication failed or the API key is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+        check:
+          type: boolean
   securitySchemes:
     apiKey:
       type: apiKey
